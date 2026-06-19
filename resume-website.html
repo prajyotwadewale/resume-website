@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prajyot Wadewale</title>
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/5ac3fe7c6abd2f62067f266d89671492?family=HelveticaNowDisplay-Medium" />
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/1aa3377e489837a26d019bba501e779d?family=HelveticaNowDisplayW01-Rg" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --font-heading: 'HelveticaNowDisplay-Medium', 'Helvetica Neue', Arial, sans-serif;
+      --font-body: 'HelveticaNowDisplayW01-Rg', 'Helvetica Neue', Arial, sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); overflow-x: hidden; background: #fff; color: #000; }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .cursor-blink { animation: blink 1s step-end infinite; }
+
+    .ham-bar { width:24px;height:2px;background:#000;display:block;transition:transform 300ms,opacity 300ms; }
+    .nav-link { font-family:var(--font-body);font-size:23px;color:#000;text-decoration:none;transition:opacity .2s; }
+    .nav-link:hover { opacity:.6; }
+    .mobile-link { font-size:32px;font-weight:500;color:#000;text-decoration:none;display:block;transition:opacity .2s; }
+    .mobile-link:hover { opacity:.6; }
+    .mobile-link-ul { text-decoration:underline;text-underline-offset:2px; }
+
+    .pill { display:inline-flex;align-items:center;justify-content:center;border-radius:9999px;font-size:13px;padding:.3em 1rem;margin:0 .2em .4em;white-space:nowrap;cursor:pointer;border:none;transition:background-color .2s,color .2s;font-family:var(--font-body); }
+    @media(min-width:640px){.pill{font-size:15px;padding:.3em 1.25rem;}}
+    .pill-white { background:#fff;color:#000;border:1px solid rgba(0,0,0,.1); }
+    .pill-white:hover { background:#000;color:#fff; }
+    .pill-outline { background:transparent;color:#fff;border:1px solid #fff;gap:.5rem; }
+    .pill-outline:hover { background:#fff;color:#000; }
+    @media(min-width:640px){.pill-outline{gap:.75rem;}}
+
+    .hero-section { position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:3rem;padding-left:1.25rem;padding-right:1.25rem;overflow:hidden;min-height:100dvh;min-height:100vh;z-index:1; }
+    @media(min-width:640px){.hero-section{padding-left:2rem;padding-right:2rem;}}
+    @media(min-width:768px){.hero-section{justify-content:center;padding-bottom:0;padding-left:2.5rem;padding-right:2.5rem;}}
+
+    .section { position:relative;z-index:2;background:#fff;border-top:1px solid rgba(0,0,0,.08); }
+    .section-inner { max-width:920px;margin:0 auto;padding:5rem 1.25rem; }
+    @media(min-width:640px){.section-inner{padding:5rem 2rem;}}
+    @media(min-width:768px){.section-inner{padding:6rem 2.5rem;}}
+
+    .section-eyebrow { font-family:var(--font-body);font-size:clamp(11px,2vw,13px);letter-spacing:.14em;text-transform:uppercase;color:rgba(0,0,0,.35);margin-bottom:.5rem; }
+    h2.section-title { font-family:var(--font-heading);font-size:clamp(2rem,6vw,4rem);letter-spacing:-.03em;line-height:1.0;color:#000;margin-bottom:2.5rem; }
+
+    .skill-row { display:flex;flex-wrap:wrap;align-items:baseline;padding:.9rem 0;border-bottom:1px solid rgba(0,0,0,.06); }
+    .skill-cat { font-family:var(--font-heading);font-size:clamp(12px,2vw,14px);color:rgba(0,0,0,.38);letter-spacing:.02em;min-width:170px;flex-shrink:0;padding-right:1.5rem;padding-top:.15rem; }
+    .skill-list { font-family:var(--font-body);font-size:clamp(15px,2.5vw,20px);color:#000;line-height:1.5;flex:1; }
+
+    .exp-item { display:grid;grid-template-columns:1fr;gap:.6rem;padding:2rem 0;border-bottom:1px solid rgba(0,0,0,.06); }
+    @media(min-width:640px){.exp-item{grid-template-columns:1fr 2fr;gap:1rem;}}
+    .exp-role { font-family:var(--font-heading);font-size:clamp(18px,3vw,24px);letter-spacing:-.02em;color:#000;line-height:1.2;margin-bottom:.2rem; }
+    .exp-company { font-size:clamp(13px,2vw,16px);color:rgba(0,0,0,.5);margin-bottom:.1rem; }
+    .exp-period { font-size:clamp(11px,1.8vw,13px);color:rgba(0,0,0,.35);letter-spacing:.04em; }
+    .exp-bullets { list-style:none;padding:0;align-self:start; }
+    .exp-bullets li { font-size:clamp(14px,2.2vw,18px);color:rgba(0,0,0,.7);line-height:1.65;padding-left:1.1em;position:relative;margin-bottom:.4rem; }
+    .exp-bullets li::before { content:'—';position:absolute;left:0;color:rgba(0,0,0,.25);font-size:.8em; }
+
+    .edu-item { display:grid;grid-template-columns:1fr;gap:.3rem;padding:1.8rem 0;border-bottom:1px solid rgba(0,0,0,.06); }
+    @media(min-width:640px){.edu-item{grid-template-columns:2fr 1fr;align-items:start;}}
+    .edu-degree { font-family:var(--font-heading);font-size:clamp(17px,2.8vw,22px);letter-spacing:-.02em;color:#000;margin-bottom:.2rem; }
+    .edu-school { font-size:clamp(13px,2vw,16px);color:rgba(0,0,0,.5);margin-bottom:.1rem; }
+    .edu-year { font-size:clamp(11px,1.8vw,13px);color:rgba(0,0,0,.35);letter-spacing:.04em; }
+    .edu-score { font-family:var(--font-heading);font-size:clamp(20px,3.5vw,30px);letter-spacing:-.03em;color:#000;text-align:left; }
+    @media(min-width:640px){.edu-score{text-align:right;}}
+
+    .lead-item { display:grid;grid-template-columns:1fr;gap:.5rem;padding:2rem 0;border-bottom:1px solid rgba(0,0,0,.06); }
+    @media(min-width:640px){.lead-item{grid-template-columns:1fr 2fr;gap:1rem;}}
+    .lead-role { font-family:var(--font-heading);font-size:clamp(17px,2.8vw,22px);letter-spacing:-.02em;color:#000;margin-bottom:.2rem; }
+    .lead-org { font-size:clamp(13px,2vw,16px);color:rgba(0,0,0,.5);margin-bottom:.1rem; }
+    .lead-period { font-size:clamp(11px,1.8vw,13px);color:rgba(0,0,0,.35);letter-spacing:.04em; }
+    .lead-desc { font-size:clamp(14px,2.2vw,18px);color:rgba(0,0,0,.7);line-height:1.65;align-self:center; }
+
+    .ach-list { list-style:none;padding:0; }
+    .ach-list li { font-family:var(--font-heading);font-size:clamp(17px,3vw,26px);letter-spacing:-.02em;color:#000;line-height:1.3;padding:1.4rem 0;border-bottom:1px solid rgba(0,0,0,.06);display:flex;align-items:baseline;gap:.8rem; }
+    .ach-num { font-size:.5em;color:rgba(0,0,0,.28);letter-spacing:.08em;flex-shrink:0;font-family:var(--font-body); }
+
+    .contact-section { position:relative;z-index:2;background:#000;color:#fff; }
+    .contact-inner { max-width:920px;margin:0 auto;padding:5rem 1.25rem; }
+    @media(min-width:640px){.contact-inner{padding:6rem 2rem;}}
+    @media(min-width:768px){.contact-inner{padding:7rem 2.5rem;}}
+    .contact-eyebrow { font-family:var(--font-body);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.5rem; }
+    h2.contact-title { font-family:var(--font-heading);font-size:clamp(2.5rem,8vw,6rem);letter-spacing:-.04em;line-height:1.0;color:#fff;margin-bottom:2.5rem; }
+    .contact-links { display:flex;flex-wrap:wrap;gap:.75rem 0;margin-bottom:2rem; }
+    .contact-link { font-size:clamp(13px,2vw,17px);color:rgba(255,255,255,.55);text-decoration:none;padding:.45rem 0;margin-right:2.5rem;border-bottom:1px solid rgba(255,255,255,.12);transition:color .2s;display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.25rem; }
+    .contact-link:hover { color:#fff; }
+    .lang-row { display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem; }
+    .lang-tag { font-size:13px;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);border-radius:9999px;padding:.25em .9em;font-family:var(--font-body); }
+
+    .site-footer { position:relative;z-index:2;background:#000;border-top:1px solid rgba(255,255,255,.07);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem; }
+    .footer-logo { font-family:var(--font-heading);font-size:15px;color:rgba(255,255,255,.35);letter-spacing:-.01em; }
+    .footer-copy { font-size:12px;color:rgba(255,255,255,.22);font-family:var(--font-body); }
+
+    .reveal { opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease; }
+    .reveal.visible { opacity:1;transform:translateY(0); }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260530_042513_df96a13b-6155-4f6e-8b93-c9dee66fba08.mp4';
+const SENSITIVITY = 0.8;
+const EMAIL = 'wadewaleprajyot@gmail.com';
+
+const NAV_LINKS = [
+  { label:'Skills', href:'#skills' },
+  { label:'Experience', href:'#experience' },
+  { label:'Education', href:'#education' },
+  { label:'Leadership', href:'#leadership' },
+];
+
+const PILL_BUTTONS = [
+  { label:'View my projects', href:'#experience' },
+  { label:'Explore skills', href:'#skills' },
+  { label:'Leadership journey', href:'#leadership' },
+  { label:"Let's collaborate", href:'#contact' },
+];
+
+const SKILLS = [
+  { cat:'Languages', list:'Python, SQL, Java' },
+  { cat:'AI & Data Science', list:'Machine Learning, Deep Learning, NLP, Generative AI, Prompt Engineering, LangChain, LangGraph, Data Analytics, Data Mining' },
+  { cat:'Visualization', list:'NumPy, Pandas, Matplotlib, Power BI' },
+  { cat:'Web & Backend', list:'FastAPI, REST APIs' },
+  { cat:'Databases', list:'MySQL, SQL Server' },
+  { cat:'Cloud & Tools', list:'Git, GitHub, Jupyter Notebook, Google Colab, AWS (Learning), Azure (Learning)' },
+  { cat:'Professional', list:'Leadership, Team Management, Communication, Problem Solving, Analytical Thinking' },
+];
+
+const EXPERIENCE = [
+  {
+    role:'Agentic AI Intern',
+    company:'Innomatics Research Labs',
+    period:'Feb 2026 – May 2026 · Remote',
+    bullets:[
+      'Developed AI-powered workflows using Python, FastAPI, LangChain, and Prompt Engineering.',
+      'Built and tested Agentic AI applications using LangGraph.',
+      'Collaborated on real-world AI projects and intelligent automation workflows.',
+    ],
+  },
+  {
+    role:'Data Analytics Intern',
+    company:'ApexPlanet Software Pvt. Ltd.',
+    period:'Mar 2026 – May 2026 · Remote',
+    bullets:[
+      'Analyzed datasets to identify trends, patterns, and actionable insights.',
+      'Processed and organized structured data using analytical techniques.',
+      'Created reports and dashboards supporting data-driven decision-making.',
+    ],
+  },
+];
+
+const EDUCATION = [
+  { degree:'B.Tech in Computer Science & Engineering', school:'Walchand Institute of Technology, Solapur', year:'Aug 2023 – Present', score:'8.85 / 10' },
+  { degree:'Higher Secondary Certificate (HSC) — Science', school:'Sudhakarrao Naik Junior College, Akola', year:'2023', score:'64.00%' },
+  { degree:'Secondary School Certificate (SSC, CBSE)', school:'School of Scholars, Akola', year:'2021', score:'76.40%' },
+];
+
+const LEADERSHIP = [
+  { role:'NSS Secretary', org:'Walchand Institute of Technology', period:'Aug 2025 – May 2026', desc:"Organized the highest number of NSS events in the institute's history — a milestone no student committee had reached before." },
+  { role:'Management Head', org:'GDG on Campus WIT', period:'Apr 2025 – May 2026', desc:'Coordinated technical events, workshops, and student engagement activities for the Google Developer Group chapter on campus.' },
+  { role:'Head — Event Operations & Finance', org:'Fashion Show, WIT', period:'Aug 2024 – May 2026', desc:'Managed end-to-end planning, budgeting, logistics, and execution of large-scale college events across multiple editions.' },
+];
+
+const ACHIEVEMENTS = [
+  'NSS Competition Gold Medalist',
+  'Represented Ball Badminton at State Level — appeared for National Finals',
+  'Participated in multiple District and Division Level sports competitions',
+];
+
+function useTypewriter(text, speed=38, startDelay=600) {
+  const [displayed, setDisplayed] = useState('');
+  const [done, setDone] = useState(false);
+  useEffect(() => {
+    setDisplayed(''); setDone(false);
+    let index=0, interval;
+    const timeout = setTimeout(() => {
+      interval = setInterval(() => {
+        index++;
+        setDisplayed(text.slice(0,index));
+        if (index >= text.length) { clearInterval(interval); setDone(true); }
+      }, speed);
+    }, startDelay);
+    return () => { clearTimeout(timeout); clearInterval(interval); };
+  }, [text,speed,startDelay]);
+  return {displayed,done};
+}
+
+function CopyIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="1"/>
+      <path d="M2 8.5H1.5A1 1 0 0 1 .5 7.5v-6A1 1 0 0 1 1.5.5h6A1 1 0 0 1 8.5 1.5V2" stroke="currentColor" strokeWidth="1"/>
+    </svg>
+  );
+}
+
+function Reveal({children, delay=0}) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    el.style.transitionDelay = delay+'ms';
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { el.classList.add('visible'); obs.unobserve(el); } });
+    }, {threshold:0.1});
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return <div ref={ref} className="reveal">{children}</div>;
+}
+
+function App() {
+  const videoRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [pillsVisible, setPillsVisible] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [isMd, setIsMd] = useState(window.innerWidth >= 768);
+
+  const {displayed, done} = useTypewriter(
+    "CS Engineer with hands-on AI internships — building LangChain workflows, backend APIs, and data-driven solutions. I lead teams and ship things. What are we solving next?",
+    36, 700
+  );
+
+  useEffect(() => { const t=setTimeout(()=>setPillsVisible(true),400); return ()=>clearTimeout(t); },[]);
+  useEffect(() => { const fn=()=>setIsMd(window.innerWidth>=768); window.addEventListener('resize',fn); return ()=>window.removeEventListener('resize',fn); },[]);
+
+  useEffect(() => {
+    const video=videoRef.current; if(!video) return;
+    let prevX=null, targetTime=0, seeking=false;
+    const seekTo=t=>{video.currentTime=t;seeking=true;};
+    const onSeeked=()=>{seeking=false;if(Math.abs(video.currentTime-targetTime)>0.01)seekTo(targetTime);};
+    const onMouseMove=e=>{
+      if(!video.duration)return;
+      const cx=e.clientX;
+      if(prevX===null){prevX=cx;return;}
+      const delta=cx-prevX; prevX=cx;
+      targetTime=Math.min(Math.max(targetTime+(delta/window.innerWidth)*SENSITIVITY*video.duration,0),video.duration);
+      if(!seeking)seekTo(targetTime);
+    };
+    video.addEventListener('seeked',onSeeked);
+    window.addEventListener('mousemove',onMouseMove);
+    return ()=>{video.removeEventListener('seeked',onSeeked);window.removeEventListener('mousemove',onMouseMove);};
+  },[]);
+
+  const handleCopy=async()=>{try{await navigator.clipboard.writeText(EMAIL);setCopied(true);setTimeout(()=>setCopied(false),1800);}catch(e){}};
+  const scrollTo=href=>{const el=document.querySelector(href);if(el)el.scrollIntoView({behavior:'smooth'});setMenuOpen(false);};
+
+  return (
+    <div style={{position:'relative',width:'100%',background:'#fff',overflowX:'hidden'}}>
+
+      {/* VIDEO */}
+      <video ref={videoRef} src={VIDEO_URL} muted playsInline preload="auto"
+        style={{position:'fixed',inset:0,zIndex:0,width:'100%',height:'100%',objectFit:'cover',objectPosition:'70% center'}}
+      />
+
+      {/* NAV */}
+      <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:10,display:'flex',justifyContent:'space-between',alignItems:'center',padding:isMd?'1.25rem 2.5rem':'1rem 1.25rem'}}>
+        <div style={{display:'flex',alignItems:'center',gap:'0.75rem'}}>
+          <span style={{fontFamily:'var(--font-heading)',fontSize:isMd?'22px':'18px',letterSpacing:'-0.02em',color:'#000',lineHeight:1}}>
+            Prajyot.dev
+          </span>
+          <span style={{fontSize:isMd?'28px':'22px',letterSpacing:'-0.02em',color:'#000',userSelect:'none',lineHeight:1}} aria-hidden="true">✳︎</span>
+        </div>
+
+        {isMd && (
+          <div style={{display:'flex',alignItems:'center'}}>
+            {NAV_LINKS.map((link,i) => (
+              <React.Fragment key={link.label}>
+                <a href={link.href} className="nav-link" onClick={e=>{e.preventDefault();scrollTo(link.href);}}>{link.label}</a>
+                {i < NAV_LINKS.length-1 && <span style={{fontSize:'23px',color:'#000',marginRight:'2px'}}>,&nbsp;</span>}
+              </React.Fragment>
+            ))}
+          </div>
+        )}
+
+        {isMd && (
+          <a href="#contact" className="nav-link" style={{textDecoration:'underline',textUnderlineOffset:'2px'}}
+            onClick={e=>{e.preventDefault();scrollTo('#contact');}}>
+            Get in touch
+          </a>
+        )}
+
+        {!isMd && (
+          <button onClick={()=>setMenuOpen(v=>!v)} aria-label="Toggle menu"
+            style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',gap:'5px',width:'32px',height:'32px',background:'transparent',border:'none',cursor:'pointer',padding:0}}>
+            <span className="ham-bar" style={{transform:menuOpen?'translateY(7px) rotate(45deg)':'none'}}/>
+            <span className="ham-bar" style={{opacity:menuOpen?0:1}}/>
+            <span className="ham-bar" style={{transform:menuOpen?'translateY(-7px) rotate(-45deg)':'none'}}/>
+          </button>
+        )}
+      </nav>
+
+      {/* MOBILE OVERLAY */}
+      {!isMd && (
+        <div style={{position:'fixed',inset:0,zIndex:9,background:'rgba(255,255,255,0.97)',backdropFilter:'blur(4px)',display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'flex-start',paddingLeft:'2rem',paddingRight:'2rem',gap:'2rem',opacity:menuOpen?1:0,pointerEvents:menuOpen?'auto':'none',transition:'opacity 300ms'}}>
+          {NAV_LINKS.map(link=>(
+            <a key={link.label} href={link.href} className="mobile-link" onClick={e=>{e.preventDefault();scrollTo(link.href);}}>{link.label}</a>
+          ))}
+          <a href="#contact" className="mobile-link mobile-link-ul" onClick={e=>{e.preventDefault();scrollTo('#contact');}}>Get in touch</a>
+        </div>
+      )}
+
+      {/* HERO */}
+      <section className="hero-section">
+        <div style={{maxWidth:'36rem',position:'relative',zIndex:10}}>
+          <div style={{pointerEvents:'none',userSelect:'none',marginBottom:isMd?'1.5rem':'1.25rem',fontSize:'clamp(18px,4vw,26px)',lineHeight:1.3,fontWeight:400,color:'#000'}}>
+            <strong style={{fontSize:'clamp(24px,5.5vw,38px)'}}>Hey, I'm Prajyot Wadewale,</strong><br/>
+            CSE Student | AI & Data Science Enthusiast
+          </div>
+          <p style={{color:'#000',marginBottom:isMd?'1.5rem':'1.25rem',fontSize:'clamp(18px,4vw,26px)',lineHeight:1.35,fontWeight:400,minHeight:'54px'}}>
+            {displayed}
+            {!done && <span className="cursor-blink" style={{display:'inline-block',width:'2px',height:'1.1em',background:'#000',verticalAlign:'middle',marginLeft:'2px'}}/>}
+          </p>
+          <div style={{opacity:pillsVisible?1:0,transform:pillsVisible?'translateY(0)':'translateY(8px)',transition:'opacity 0.4s ease,transform 0.4s ease'}}>
+            <div style={{display:'flex',flexWrap:'wrap',rowGap:'0.25rem'}}>
+              {PILL_BUTTONS.map(btn=>(
+                <button key={btn.label} className="pill pill-white" onClick={()=>scrollTo(btn.href)}>{btn.label}</button>
+              ))}
+              <button className="pill pill-outline" onClick={handleCopy}>
+                <span>Reach me:{' '}<span style={{textDecoration:'underline',textUnderlineOffset:'1px'}}>{copied?'Copied!':EMAIL}</span></span>
+                <CopyIcon/>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SKILLS */}
+      <section className="section" id="skills">
+        <div className="section-inner">
+          <Reveal>
+            <div className="section-eyebrow">Technical Arsenal</div>
+            <h2 className="section-title">Skills</h2>
+            {SKILLS.map((s,i)=>(
+              <div key={i} className="skill-row">
+                <div className="skill-cat">{s.cat}</div>
+                <div className="skill-list">{s.list}</div>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section className="section" id="experience" style={{background:'rgba(0,0,0,0.02)'}}>
+        <div className="section-inner">
+          <Reveal>
+            <div className="section-eyebrow">Work History</div>
+            <h2 className="section-title">Experience</h2>
+          </Reveal>
+          {EXPERIENCE.map((exp,i)=>(
+            <Reveal key={i} delay={i*100}>
+              <div className="exp-item">
+                <div>
+                  <div className="exp-role">{exp.role}</div>
+                  <div className="exp-company">{exp.company}</div>
+                  <div className="exp-period">{exp.period}</div>
+                </div>
+                <ul className="exp-bullets">
+                  {exp.bullets.map((b,j)=><li key={j}>{b}</li>)}
+                </ul>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* EDUCATION */}
+      <section className="section" id="education">
+        <div className="section-inner">
+          <Reveal>
+            <div className="section-eyebrow">Academic Background</div>
+            <h2 className="section-title">Education</h2>
+          </Reveal>
+          {EDUCATION.map((edu,i)=>(
+            <Reveal key={i} delay={i*80}>
+              <div className="edu-item">
+                <div>
+                  <div className="edu-degree">{edu.degree}</div>
+                  <div className="edu-school">{edu.school}</div>
+                  <div className="edu-year">{edu.year}</div>
+                </div>
+                <div className="edu-score">{edu.score}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* LEADERSHIP */}
+      <section className="section" id="leadership" style={{background:'rgba(0,0,0,0.02)'}}>
+        <div className="section-inner">
+          <Reveal>
+            <div className="section-eyebrow">Beyond Academics</div>
+            <h2 className="section-title">Leadership</h2>
+          </Reveal>
+          {LEADERSHIP.map((l,i)=>(
+            <Reveal key={i} delay={i*100}>
+              <div className="lead-item">
+                <div>
+                  <div className="lead-role">{l.role}</div>
+                  <div className="lead-org">{l.org}</div>
+                  <div className="lead-period">{l.period}</div>
+                </div>
+                <div className="lead-desc">{l.desc}</div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ACHIEVEMENTS */}
+      <section className="section" id="achievements">
+        <div className="section-inner">
+          <Reveal>
+            <div className="section-eyebrow">Highlights</div>
+            <h2 className="section-title">Achievements</h2>
+            <ul className="ach-list">
+              {ACHIEVEMENTS.map((a,i)=>(
+                <li key={i}><span className="ach-num">0{i+1}</span>{a}</li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <div className="contact-section" id="contact">
+        <div className="contact-inner">
+          <Reveal>
+            <div className="contact-eyebrow">Let's Connect</div>
+            <h2 className="contact-title">Get in<br/>touch.</h2>
+            <div className="contact-links">
+              <a href="mailto:wadewaleprajyot@gmail.com" className="contact-link">wadewaleprajyot@gmail.com</a>
+              <a href="tel:+918847764268" className="contact-link">+91 88477 64268</a>
+              <a href="http://www.linkedin.com/in/prajyotwadewale" target="_blank" rel="noopener" className="contact-link">LinkedIn ↗</a>
+              <a href="https://github.com/prajyotwadewale" target="_blank" rel="noopener" className="contact-link">GitHub ↗</a>
+              <a href="https://instagram.com/prajyotwadewale" target="_blank" rel="noopener" className="contact-link">Instagram ↗</a>
+              <span className="contact-link" style={{cursor:'default'}}>Solapur, Maharashtra, India</span>
+            </div>
+            <div className="lang-row">
+              {['English','Hindi','Marathi'].map(l=><span key={l} className="lang-tag">{l}</span>)}
+            </div>
+          </Reveal>
+        </div>
+      </div>
+
+      <footer className="site-footer">
+        <span className="footer-logo">Prajyot Wadewale ✳︎</span>
+        <span className="footer-copy">CS Engineering · AI & Data Science · Solapur, India</span>
+      </footer>
+
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
